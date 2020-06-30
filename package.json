@@ -59,8 +59,8 @@
         "chalk": "^4.1.0",
         "commander": "^5.1.0",
         "find-package-json": "^1.2.0",
-        "json-from-default-schema": "0.0.1",
-        "jtomler": "0.0.5",
+        "json-from-default-schema": "^0.0.1",
+        "jtomler": "^0.0.5",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^6.5.5"
     },
