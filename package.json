@@ -1,7 +1,7 @@
 {
     "name": "template",
     "version": "0.0.1",
-    "description": "Template for nodejs with typescript and nestjs",
+    "description": "Template for nodejs with typescript",
     "main": "app.js",
     "scripts": {
         "decode": "secret-coder --decode --config ./secret.config.json",
@@ -13,26 +13,23 @@
         "lint:tests": "eslint \"./tests/**/*.{js,ts}\" --quiet --fix",
         "test": "mocha -r ts-node/register --config ./tests/mocha.unit.config.json && mocha -r ts-node/register --config ./tests/mocha.e2e.config.json",
         "test:unit": "mocha -r ts-node/register --config ./tests/mocha.unit.config.json",
-        "test:e2e": "mocha -r ts-node/register --config ./tests/mocha.e2e.config.json",
-        "nest": "nest"
+        "test:e2e": "mocha -r ts-node/register --config ./tests/mocha.e2e.config.json"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/samurayii/template-project-ts-nest.git"
+        "url": "git+https://github.com/samurayii/template-project-ts.git"
     },
     "keywords": [
         "templates",
-        "typescript",
-        "nest"
+        "typescript"
     ],
     "author": "Nuzhnov A.A.",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/samurayii/template-project-ts-nest/issues"
+        "url": "https://github.com/samurayii/template-project-ts/issues"
     },
-    "homepage": "https://github.com/samurayii/template-project-ts-nest.git#readme",
+    "homepage": "https://github.com/samurayii/template-project-ts.git#readme",
     "devDependencies": {
-        "@nestjs/cli": "^7.4.1",
         "@types/chai": "^4.2.11",
         "@types/chai-http": "^4.2.0",
         "@types/chalk": "^2.2.0",
@@ -53,16 +50,11 @@
     },
     "dependencies": {
         "@iarna/toml": "^2.2.5",
-        "@nestjs/common": "^7.2.0",
-        "@nestjs/core": "^7.2.0",
-        "@nestjs/platform-express": "^7.2.0",
         "chalk": "^4.1.0",
         "commander": "^5.1.0",
         "find-package-json": "^1.2.0",
         "json-from-default-schema": "^0.0.1",
-        "jtomler": "^0.0.5",
-        "reflect-metadata": "^0.1.13",
-        "rxjs": "^6.5.5"
+        "jtomler": "^0.0.5"
     },
     "remover": {
         "target": "./package.json",
