@@ -54,8 +54,7 @@
         "commander": "^5.1.0",
         "find-package-json": "^1.2.0",
         "json-from-default-schema": "^0.0.1",
-        "jtomler": "^0.0.5",
-        "required-argument": "^0.0.2"
+        "jtomler": "^0.0.5"
     },
     "remover": {
         "target": "./package.json",
