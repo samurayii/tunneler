@@ -1,0 +1,11 @@
+.gitignore
+.git
+.vscode
+node_modules
+tests
+index.ts
+.eslintignore
+.eslintrc
+tsconfig.json
+src
+secret.config.json
