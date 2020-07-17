@@ -1,7 +1,7 @@
 {
     "name": "template",
     "version": "0.0.1",
-    "description": "Template for nodejs with typescript",
+    "description": "Template for nodejs app with typescript",
     "main": "app.js",
     "scripts": {
         "ncu": "ncu",
