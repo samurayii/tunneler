@@ -4,6 +4,7 @@
     "description": "Template for nodejs app with typescript",
     "main": "app.js",
     "scripts": {
+        "up": "ncu && ncu -u && rimraf ./package-lock.json && npm i",
         "ncu": "ncu",
         "decode": "secret-coder --decode --config ./secret.config.json",
         "encode": "secret-coder --encode --config ./secret.config.json",
