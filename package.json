@@ -15,8 +15,7 @@
         "lint:tests": "eslint \"./tests/**/*.{js,ts}\" --quiet --fix",
         "test": "mocha -r ts-node/register --config ./tests/mocha.unit.config.json && mocha -r ts-node/register --config ./tests/mocha.e2e.config.json",
         "test:unit": "mocha -r ts-node/register --config ./tests/mocha.unit.config.json",
-        "test:e2e": "mocha -r ts-node/register --config ./tests/mocha.e2e.config.json",
-        "publish": "npm run build && cd ./dist && npm publish"
+        "test:e2e": "mocha -r ts-node/register --config ./tests/mocha.e2e.config.json"
     },
     "repository": {
         "type": "git",
