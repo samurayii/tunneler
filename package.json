@@ -6,9 +6,7 @@
     "scripts": {
         "up": "ncu && ncu -u && rimraf ./package-lock.json && npm i",
         "ncu": "ncu",
-        "decode": "secret-coder --decode --config ./secret.config.json",
-        "encode": "secret-coder --encode --config ./secret.config.json",
-        "build": "rimraf ./dist && npm run lint && tsc && json-key-remover",
+        "build": "rimraf ./dist && npm run lint && tsc && json-key-remover && copy-files-from-to",
         "start": "node ./dist/app.js --config ./config.toml",
         "dev": "ts-node ./src/app.ts --config ./config.toml",
         "lint": "eslint \"./src/**/*.{js,ts}\" --quiet --fix && tsc --noEmit",
@@ -47,8 +45,8 @@
         "mocha": "^8.0.1",
         "ncp": "^2.0.0",
         "npm-check-updates": "^7.0.1",
+        "copy-files-from-to": "^3.1.4",
         "rimraf": "^3.0.2",
-        "secret-coder": "0.0.2",
         "ts-node": "^8.10.2",
         "typescript": "^3.9.6"
     },
@@ -79,5 +77,6 @@
             "scripts/help": "node ./app.js -h",
             "scripts/version": "node ./app.js -v"
         }
-    }
+    },
+    "copyFiles": []
 }
