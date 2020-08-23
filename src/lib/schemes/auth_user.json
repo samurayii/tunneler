@@ -1,0 +1,36 @@
+{
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string",
+                    "minLength": 0,
+                    "maxLength": 32
+                },
+                "password": {
+                    "type": "string",
+                    "minLength": 0,
+                    "maxLength": 64
+                }
+            },
+            "required": [
+                "username",
+                "password"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string",
+                    "minLength": 0,
+                    "maxLength": 128
+                }
+            },
+            "required": [
+                "token"
+            ]
+        }
+    ]
+}

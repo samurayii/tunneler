@@ -6,7 +6,9 @@ import * as finder from "find-package-json";
 import * as Ajv from "ajv";
 import jtomler from "jtomler";
 import json_from_schema from "json-from-default-schema";
-import * as config_schema from "./config_schema.json";
+import * as auth_user_schema from "./schemes/auth_user.json";
+import * as config_schema from "./schemes/config_schema.json";
+import { IAppConfig } from "./config.interface";
  
 const pkg = finder(__dirname).next().value;
 
@@ -28,7 +30,21 @@ if (!fs.existsSync(full_config_path)) {
     process.exit(1);
 }
 
-const config = json_from_schema(jtomler(full_config_path), config_schema);
+const config: IAppConfig = <IAppConfig>json_from_schema(jtomler(full_config_path), config_schema);
+
+for (const item of config.authorization.users) {
+
+    const ajv_user_item = new Ajv();
+    const validate_user_item = ajv_user_item.compile(auth_user_schema);
+
+    const valid = validate_user_item(item);
+
+    if (!valid) {
+        console.error(chalk.red(`[ERROR] Config authorization.users parsing error. Schema errors:\n${JSON.stringify(validate_user_item.errors, null, 2)}`));
+        process.exit(1);
+    }
+
+}
 
 const ajv = new Ajv();
 const validate = ajv.compile(config_schema);
