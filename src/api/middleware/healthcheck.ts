@@ -18,6 +18,12 @@ export class MiddlewareHealthcheck implements IMiddleware {
 
         return (ctx: Context, next: Next) => {
 
+            if (ctx.url === "/healthcheck") {
+                ctx.body = "OK";
+                ctx.status = 200;
+                return;
+            }
+
             if (!ctx.url.includes(`${config.prefix}/healthcheck`) && ctx.url !== `${config.prefix}` && ctx.url !== `${config.prefix}/`) {
                 return next();
             } else {
