@@ -1,1 +1,24 @@
-message = "hello"
+[logger]                # настройка логгера
+    mode = "prod"       # режим (prod или dev или debug)
+    enable = true       # активация логгера
+    timestamp = false   # выводить время лога (true или false)
+    type = true         # выводить тип лога (true или false)
+
+[authorization]                     # настрока авторизации
+    [[authorization.users]]         # массив пользователей
+        username = "username"       # имя пользователя
+        password = "password"       # пароль пользователя
+    [[authorization.users]]         
+        token = "xxxxxxxxxxxx"      # токен доступа
+
+[api]                                   # настройка API
+    enable = false                      # активация API
+    auth = false                        # активация авторизации
+    listening = "*:3001"                # настройка слушателя
+    prefix = "/api"                     # префикс
+    proxy = false                       # когда поле заголовка true proxy будут доверенным
+    subdomain_offset = 2                # смещение от поддомена для игнорирования
+    proxy_header = "X-Forwarded-For"    # заголовок IP прокси
+    ips_count = 0                       # максимальное количество IP прочитанное из заголовка прокси, по умолчанию 0 (означает бесконечность)
+    env = "development"                 # среда для сервера koa
+    #keys = []                          # массив подписанных ключей cookie
