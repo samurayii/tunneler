@@ -9,7 +9,7 @@
         "pub": "npm run build && npm publish ./dist && rimraf ./dist",
         "build": "rimraf ./dist && npm run lint && tsc && json-key-remover && copy-files-from-to",
         "start": "node ./dist/app.js --config ./config.toml",
-        "dev": "ts-node ./src/app.ts --config ./config.toml",
+        "start:dev": "ts-node ./src/app.ts --config ./config.toml",
         "lint": "eslint \"./src/**/*.{js,ts}\" --quiet --fix && tsc --noEmit",
         "lint:tests": "eslint \"./tests/**/*.{js,ts}\" --quiet --fix",
         "test": "mocha -r ts-node/register --config ./tests/mocha.unit.config.json && mocha -r ts-node/register --config ./tests/mocha.e2e.config.json",
