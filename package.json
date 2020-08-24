@@ -53,6 +53,7 @@
         "typescript": "^3.9.6"
     },
     "dependencies": {
+        "ajv": "^6.12.4",
         "chalk": "^4.1.0",
         "commander": "^5.1.0",
         "di-ts-decorators": "0.0.3",
