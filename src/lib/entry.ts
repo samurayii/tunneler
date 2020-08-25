@@ -30,7 +30,7 @@ if (process.env["TEMPLATE_CONFIG_PATH"] === undefined) {
 const full_config_path = path.resolve(process.cwd(), program.config);
 
 if (!fs.existsSync(full_config_path)) {
-    console.error(chalk.red(`Config file ${full_config_path} not found`));
+    console.error(chalk.red(`[ERROR] Config file ${full_config_path} not found`));
     process.exit(1);
 }
 
@@ -56,7 +56,8 @@ const validate = ajv.compile(config_schema);
 const valid = validate(config);
 
 if (!valid) {
-    throw new Error(`Schema errors:\n${JSON.stringify(validate.errors, null, 2)}`);
+    console.error(chalk.red(`[ERROR] Schema errors:\n${JSON.stringify(validate.errors, null, 2)}`));
+    process.exit(1);
 }
 
 export default config;
