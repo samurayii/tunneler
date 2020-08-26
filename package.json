@@ -7,14 +7,21 @@
         "up": "ncu && ncu -u && rimraf ./package-lock.json && npm i",
         "ncu": "ncu",
         "pub": "npm run build && npm publish ./dist && rimraf ./dist",
-        "build": "rimraf ./dist && npm run lint && tsc && json-key-remover && copy-files-from-to",
+        "build": "rimraf ./dist && npm run lint && tsc && json-key-remover && copy-files-from-to --mode build",
         "start": "node ./dist/app.js --config ./config.toml",
         "start:dev": "ts-node ./src/app.ts --config ./config.toml",
         "lint": "eslint \"./src/**/*.{js,ts}\" --quiet --fix && tsc --noEmit",
         "lint:tests": "eslint \"./tests/**/*.{js,ts}\" --quiet --fix",
         "test": "mocha -r ts-node/register --config ./tests/mocha.unit.config.json && mocha -r ts-node/register --config ./tests/mocha.e2e.config.json",
         "test:unit": "mocha -r ts-node/register --config ./tests/mocha.unit.config.json",
-        "test:e2e": "mocha -r ts-node/register --config ./tests/mocha.e2e.config.json"
+        "test:e2e": "mocha -r ts-node/register --config ./tests/mocha.e2e.config.json",
+        "ob": "javascript-obfuscator ./bundle/app.js --target node --compact true --control-flow-flattening true --dead-code-injection true --output ./ob/app.js",
+        "parcel": "parcel build ./dist/app.js --target node --no-minify --no-cache --no-source-maps --out-dir ./bundle",
+        "docker:build": "npm run build && npm run parcel && npm run ob && copy-files-from-to --mode build:build && ts-node ./docker-build/build.ts",
+        "docker:push:version": "ts-node ./docker-build/push_version.ts",
+        "docker:push:latest": "ts-node ./docker-build/push_latest.ts",
+        "docker:tag": "ts-node ./docker-build/tag.ts",
+        "docker": "npm run docker:build && npm run docker:tag && npm run docker:push:version && npm run docker:push:latest"
     },
     "repository": {
         "type": "git",
@@ -46,11 +53,13 @@
         "copy-files-from-to": "^3.1.4",
         "eslint": "^7.7.0",
         "json-key-remover": "^0.0.2",
-        "mocha": "^8.1.1",
+        "mocha": "^8.1.2",
         "npm-check-updates": "^7.1.1",
         "rimraf": "^3.0.2",
         "ts-node": "^9.0.0",
-        "typescript": "^4.0.2"
+        "typescript": "^4.0.2",
+        "parcel-bundler": "^1.12.4",
+        "javascript-obfuscator": "^1.11.0"
     },
     "dependencies": {
         "ajv": "^6.12.4",
@@ -85,5 +94,8 @@
             "scripts/version": "node ./app.js -v"
         }
     },
-    "copyFiles": []
+    "copyFiles": [],
+    "copyFilesSettings": {
+        "whenFileExists": "overwrite"
+    }
 }

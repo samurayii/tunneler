@@ -6,3 +6,8 @@ dist
 Thumbs.db
 .vscode
 config.toml
+docker-build/app.js
+docker-build/docker-healthcheck.js
+docker-build/package.json
+docker-build/package-lock.json
+!docker-build/config.toml
