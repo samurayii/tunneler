@@ -1,0 +1,13 @@
+[logger]
+    mode = "debug"
+    timestamp = true
+
+[authorization]
+    [[authorization.users]]
+        username = "username"
+        password = "password"
+
+[api]
+    enable = true
+    auth = true
+    env = "development"

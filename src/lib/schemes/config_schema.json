@@ -248,8 +248,6 @@
     },
     "required": [
         "logger",
-        "sync",
-        "cron",
         "authorization",
         "api"
     ]
