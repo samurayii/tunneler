@@ -5,6 +5,8 @@ dist
 .DS_Store
 Thumbs.db
 .vscode
+bundle
+ob
 docker-build/app.js
 docker-build/docker-healthcheck.js
 docker-build/package.json

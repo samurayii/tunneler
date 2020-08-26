@@ -25,7 +25,7 @@
         "test:e2e": "mocha -r ts-node/register --config ./tests/mocha.e2e.config.json",
         "ob": "javascript-obfuscator ./bundle/app.js --target node --compact true --control-flow-flattening true --dead-code-injection true --output ./ob/app.js",
         "parcel": "parcel build ./dist/app.js --target node --no-minify --no-cache --no-source-maps --out-dir ./bundle",
-        "docker:build": "npm run build && npm run parcel && npm run ob && copy-files-from-to --mode build:build && ts-node ./docker-build/build.ts",
+        "docker:build": "npm run build && npm run parcel && npm run ob && copy-files-from-to --mode docker:build && ts-node ./docker-build/build.ts",
         "docker:push:version": "ts-node ./docker-build/push_version.ts",
         "docker:push:latest": "ts-node ./docker-build/push_latest.ts",
         "docker:tag": "ts-node ./docker-build/tag.ts",
@@ -94,15 +94,69 @@
             "repository",
             "keywords",
             "homepage",
-            "bugs"
-        ],
-        "add": {
-            "scripts/start": "node ./app.js --config ./config.toml",
-            "scripts/help": "node ./app.js -h",
-            "scripts/version": "node ./app.js -v"
-        }
+            "bugs",
+            "copyFiles",
+            "copyFilesSettings"
+        ]
     },
-    "copyFiles": [],
+    "copyFiles": [
+        {
+            "from": {
+                "build": "./package-lock.json",
+                "default": {
+                    "skip": true
+                }
+            },
+            "to": {
+                "build": "./dist/package-lock.json",
+                "default": {
+                    "skip": true
+                }
+            }
+        },
+        {
+            "from": {
+                "docker:build": "./ob/app.js",
+                "default": {
+                    "skip": true
+                }
+            },
+            "to": {
+                "docker:build": "./docker-build/app.js",
+                "default": {
+                    "skip": true
+                }
+            }
+        },
+        {
+            "from": {
+                "docker:build": "./dist/package.json",
+                "default": {
+                    "skip": true
+                }
+            },
+            "to": {
+                "docker:build": "./docker-build/package.json",
+                "default": {
+                    "skip": true
+                }
+            }
+        },
+        {
+            "from": {
+                "docker:build": "./dist/package-lock.json",
+                "default": {
+                    "skip": true
+                }
+            },
+            "to": {
+                "docker:build": "./docker-build/package-lock.json",
+                "default": {
+                    "skip": true
+                }
+            }
+        }
+    ],
     "copyFilesSettings": {
         "whenFileExists": "overwrite"
     }
