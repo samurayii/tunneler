@@ -4,13 +4,6 @@
     "description": "Template for nodejs app with typescript",
     "main": "app.js",
     "docker_image": "samuray/app-template",
-    "directories": {
-        "lib": "lib",
-        "api": "api"
-    },
-    "bin": {
-        "app-template": "./app.js"
-    },
     "scripts": {
         "up": "ncu && ncu -u && rimraf ./package-lock.json && npm i",
         "ncu": "ncu",
@@ -90,10 +83,8 @@
         "remove": [
             "remover",
             "devDependencies",
-            "description",
             "main",
             "scripts",
-            "repository",
             "keywords",
             "homepage",
             "bugs",
