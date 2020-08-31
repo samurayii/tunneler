@@ -10,7 +10,7 @@
         "pub": "npm run build && npm publish ./dist && rimraf ./dist",
         "build": "rimraf ./dist && npm run lint && tsc && json-key-remover && copy-files-from-to --mode build",
         "start": "node ./dist/app.js --config ./config.toml",
-        "start:dev": "node ./src/app.ts --config ./config.toml",
+        "start:dev": "ts-node ./src/app.ts --config ./config.toml",
         "start:bundle": "node ./bundle/app.js --config ./config.toml",
         "start:ob": "ts-node ./ob/app.js --config ./config.toml",
         "lint": "eslint \"./src/**/*.{js,ts}\" --quiet --fix && tsc --noEmit",
