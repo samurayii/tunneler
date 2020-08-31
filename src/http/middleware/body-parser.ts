@@ -5,7 +5,7 @@ import { ILogger, Logger } from "../../lib/logger";
 import { Catalog } from "di-ts-decorators";
 
 @Middleware("api-server")
-export class MiddlewareBodyParser implements IMiddleware {
+export class BodyParser implements IMiddleware {
 
     constructor (
         private readonly _app_id: string,
