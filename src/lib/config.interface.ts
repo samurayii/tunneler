@@ -1,4 +1,4 @@
-import { IApiServerConfig } from "../api";
+import { IApiServerConfig } from "../http";
 import { ILoggerConfig } from "./logger";
 import { IAuthorizationConfig } from "./authorization";
 import { IDockerHealthcheckConfig } from "./docker-healthcheck";

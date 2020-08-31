@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { IDockerHealthcheckConfig, IDockerHealthcheck } from "./interfaces";
-import { IApiServerConfig } from "../../api";
+import { IApiServerConfig } from "../../http";
 import * as chalk from "chalk";
 
 export * from "./interfaces";
