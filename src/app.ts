@@ -6,7 +6,7 @@ import { Authorization } from "./lib/authorization";
 
 console.log(JSON.stringify(config, null, 4));
 
-import "./api";
+import "./http";
 
 const logger = new Logger(config.logger);
 const authorization = new Authorization(config.authorization);
