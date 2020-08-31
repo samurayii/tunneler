@@ -244,11 +244,35 @@
                 "env",
                 "parsing"
             ]
+        },
+        "docker_healthcheck": {
+            "type": "object",
+            "default": {},
+            "env": "TEMPLATE_DOCKER_HEALTHCHECK",
+            "properties": {
+                "enable": {
+                    "type": "boolean",
+                    "default": false,
+                    "env": "TEMPLATE_DOCKER_HEALTHCHECK_ENABLE",
+                    "enum": [true, false]
+                },
+                "timeout": {
+                    "type": "integer",
+                    "default": 10,
+                    "env": "TEMPLATE_DOCKER_HEALTHCHECK_TIMEOUT",
+                    "minimum": 1
+                }
+            },
+            "required": [
+                "enable",
+                "timeout"
+            ]
         }
     },
     "required": [
         "logger",
         "authorization",
-        "api"
+        "api",
+        "docker_healthcheck"
     ]
 }

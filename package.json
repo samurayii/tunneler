@@ -20,8 +20,12 @@
         "test:e2e": "start-server-and-test e2e:start-server http://localhost:3001/api/healthcheck e2e:start-tests",
         "e2e:start-server": "ts-node ./src/app.ts --config ./tests/e2e/config.toml",
         "e2e:start-tests": "mocha -r ts-node/register --config ./tests/mocha.e2e.config.json",
-        "ob": "javascript-obfuscator ./bundle/app.js --target node --compact true --control-flow-flattening true --dead-code-injection true --output ./ob/app.js",
-        "parcel": "parcel build ./dist/app.js --target node --no-minify --no-cache --no-source-maps --out-dir ./bundle",
+        "ob": "rimraf ./ob && npm run ob:app && npm run ob:docker-healthcheck",
+        "ob:app": "javascript-obfuscator ./bundle/app.js --target node --compact true --control-flow-flattening true --dead-code-injection true --output ./ob/app.js",
+        "ob:docker-healthcheck": "javascript-obfuscator ./bundle/docker-healthcheck.js --target node --compact true --control-flow-flattening true --dead-code-injection true --output ./ob/docker-healthcheck.js",
+        "parcel": "rimraf ./bundle && npm run parcel:app && npm run parcel:docker-healthcheck",
+        "parcel:app": "parcel build ./dist/app.js --target node --no-minify --no-cache --no-source-maps --out-dir ./bundle",
+        "parcel:docker-healthcheck": "parcel build ./dist/docker-healthcheck.js --target node --no-minify --no-cache --no-source-maps --out-dir ./bundle",
         "docker:build": "npm run build && npm run parcel && npm run ob && copy-files-from-to --mode docker:build && ts-node ./docker-build/build.ts",
         "docker:push:version": "ts-node ./docker-build/push_version.ts",
         "docker:push:latest": "ts-node ./docker-build/push_latest.ts",
@@ -69,6 +73,7 @@
     },
     "dependencies": {
         "ajv": "^6.12.4",
+        "axios": "^0.20.0",
         "chalk": "^4.1.0",
         "commander": "^6.0.0",
         "di-ts-decorators": "0.0.3",
@@ -119,6 +124,20 @@
             },
             "to": {
                 "docker:build": "./docker-build/app.js",
+                "default": {
+                    "skip": true
+                }
+            }
+        },
+        {
+            "from": {
+                "docker:build": "./ob/docker-healthcheck.js",
+                "default": {
+                    "skip": true
+                }
+            },
+            "to": {
+                "docker:build": "./docker-build/docker-healthcheck.js",
                 "default": {
                     "skip": true
                 }
