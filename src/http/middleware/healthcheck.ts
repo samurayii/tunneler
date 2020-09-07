@@ -4,7 +4,7 @@ import { Catalog } from "di-ts-decorators";
 import { IApiServerConfig } from "../interfaces";
 
 @Middleware("api-server")
-export class MiddlewareHealthcheck implements IMiddleware {
+export class Healthcheck implements IMiddleware {
 
     constructor (
         private readonly _app_id: string,

@@ -8,9 +8,9 @@
         "up": "ncu && ncu -u && rimraf ./package-lock.json && npm i",
         "ncu": "ncu",
         "pub": "npm run build && npm publish ./dist && rimraf ./dist",
-        "build": "rimraf ./dist && npm run lint && tsc && json-key-remover && copy-files-from-to --mode build",
+        "build": "rimraf ./dist && npm run lint && tsc && json-key-remover && files-copier -e build",
         "start": "node ./dist/app.js --config ./config.toml",
-        "start:dev": "node ./src/app.ts --config ./config.toml",
+        "start:dev": "ts-node ./src/app.ts --config ./config.toml",
         "start:bundle": "node ./bundle/app.js --config ./config.toml",
         "start:ob": "ts-node ./ob/app.js --config ./config.toml",
         "lint": "eslint \"./src/**/*.{js,ts}\" --quiet --fix && tsc --noEmit",
@@ -20,9 +20,13 @@
         "test:e2e": "start-server-and-test e2e:start-server http://localhost:3001/api/healthcheck e2e:start-tests",
         "e2e:start-server": "ts-node ./src/app.ts --config ./tests/e2e/config.toml",
         "e2e:start-tests": "mocha -r ts-node/register --config ./tests/mocha.e2e.config.json",
-        "ob": "javascript-obfuscator ./bundle/app.js --target node --compact true --control-flow-flattening true --dead-code-injection true --output ./ob/app.js",
-        "parcel": "parcel build ./dist/app.js --target node --no-minify --no-cache --no-source-maps --out-dir ./bundle",
-        "docker:build": "npm run build && npm run parcel && npm run ob && copy-files-from-to --mode docker:build && ts-node ./docker-build/build.ts",
+        "ob": "rimraf ./ob && npm run ob:app && npm run ob:docker-healthcheck",
+        "ob:app": "javascript-obfuscator ./bundle/app.js --target node --compact true --control-flow-flattening true --dead-code-injection true --output ./ob/app.js",
+        "ob:docker-healthcheck": "javascript-obfuscator ./bundle/docker-healthcheck.js --target node --compact true --control-flow-flattening true --dead-code-injection true --output ./ob/docker-healthcheck.js",
+        "parcel": "rimraf ./bundle && npm run parcel:app && npm run parcel:docker-healthcheck",
+        "parcel:app": "parcel build ./dist/app.js --target node --no-minify --no-cache --no-source-maps --out-dir ./bundle",
+        "parcel:docker-healthcheck": "parcel build ./dist/docker-healthcheck.js --target node --no-minify --no-cache --no-source-maps --out-dir ./bundle",
+        "docker:build": "npm run build && npm run parcel && npm run ob && files-copier -e docker:build && ts-node ./docker-build/build.ts",
         "docker:push:version": "ts-node ./docker-build/push_version.ts",
         "docker:push:latest": "ts-node ./docker-build/push_latest.ts",
         "docker:tag": "ts-node ./docker-build/tag.ts",
@@ -50,17 +54,17 @@
         "@types/koa-helmet": "^5.2.0",
         "@types/koa-logger": "^3.1.1",
         "@types/mocha": "^8.0.3",
-        "@types/node": "^14.6.0",
-        "@typescript-eslint/eslint-plugin": "^3.10.1",
-        "@typescript-eslint/parser": "^3.10.1",
+        "@types/node": "^14.6.2",
+        "@typescript-eslint/eslint-plugin": "^4.0.1",
+        "@typescript-eslint/parser": "^4.0.1",
         "chai": "^4.2.0",
         "chai-http": "^4.3.0",
-        "copy-files-from-to": "^3.1.4",
-        "eslint": "^7.7.0",
-        "javascript-obfuscator": "^1.11.0",
+        "eslint": "^7.8.0",
+        "files-copier": "^0.1.1",
+        "javascript-obfuscator": "^1.12.0",
         "json-key-remover": "^0.0.2",
-        "mocha": "^8.1.2",
-        "npm-check-updates": "^7.1.1",
+        "mocha": "^8.1.3",
+        "npm-check-updates": "^8.0.2",
         "parcel-bundler": "^1.12.4",
         "rimraf": "^3.0.2",
         "start-server-and-test": "^1.11.3",
@@ -69,8 +73,9 @@
     },
     "dependencies": {
         "ajv": "^6.12.4",
+        "axios": "^0.20.0",
         "chalk": "^4.1.0",
-        "commander": "^6.0.0",
+        "commander": "^6.1.0",
         "di-ts-decorators": "0.0.3",
         "find-package-json": "^1.2.0",
         "json-from-default-schema": "^0.1.4",
@@ -95,65 +100,36 @@
             "copyFilesSettings"
         ]
     },
-    "copyFiles": [
-        {
-            "from": {
-                "build": "./package-lock.json",
-                "default": {
-                    "skip": true
+    "copier": {
+        "build": {
+            "rewrite": true,
+            "copy": [
+                {
+                    "from": "./package-lock.json",
+                    "to": "./dist/package-lock.json"
                 }
-            },
-            "to": {
-                "build": "./dist/package-lock.json",
-                "default": {
-                    "skip": true
-                }
-            }
+            ]
         },
-        {
-            "from": {
-                "docker:build": "./ob/app.js",
-                "default": {
-                    "skip": true
+        "docker:build": {
+            "rewrite": true,
+            "copy": [
+                {
+                    "from": "./ob/app.js",
+                    "to": "./docker-build/app.js"
+                },
+                {
+                    "from": "./ob/docker-healthcheck.js",
+                    "to": "./docker-build/docker-healthcheck.js"
+                },
+                {
+                    "from": "./dist/package.json",
+                    "to": "./docker-build/package.json"
+                },
+                {
+                    "from": "./dist/package-lock.json",
+                    "to": "./docker-build/package-lock.json"
                 }
-            },
-            "to": {
-                "docker:build": "./docker-build/app.js",
-                "default": {
-                    "skip": true
-                }
-            }
-        },
-        {
-            "from": {
-                "docker:build": "./dist/package.json",
-                "default": {
-                    "skip": true
-                }
-            },
-            "to": {
-                "docker:build": "./docker-build/package.json",
-                "default": {
-                    "skip": true
-                }
-            }
-        },
-        {
-            "from": {
-                "docker:build": "./dist/package-lock.json",
-                "default": {
-                    "skip": true
-                }
-            },
-            "to": {
-                "docker:build": "./docker-build/package-lock.json",
-                "default": {
-                    "skip": true
-                }
-            }
+            ]
         }
-    ],
-    "copyFilesSettings": {
-        "whenFileExists": "overwrite"
     }
 }

@@ -22,8 +22,10 @@ RUN curl -Lo /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases
     chmod 755 /usr/local/bin/dumb-init
 
 COPY start.sh /start
+COPY healthcheck.sh /healthcheck
 
-RUN chmod +x /start
+RUN chmod +x /start && \
+    chmod +x /healthcheck
 
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 CMD ["/bin/bash", "/start"]
@@ -31,9 +33,13 @@ CMD ["/bin/bash", "/start"]
 COPY package.json /${APP_NAME}/package.json
 COPY package-lock.json /${APP_NAME}/package-lock.json
 COPY app.js /${APP_NAME}/app.js
+COPY docker-healthcheck.js /${APP_NAME}/docker-healthcheck.js
 COPY config.toml /${APP_NAME}/config.toml
 
 
 RUN cd /${APP_NAME} && \
     npm install --only=production && \
-    node app.js -v
+    node app.js -v && \
+    node docker-healthcheck.js -v
+
+HEALTHCHECK --interval=10s --timeout=10s --start-period=5s --retries=3 CMD [ "bash", "/healthcheck" ]

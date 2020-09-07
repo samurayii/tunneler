@@ -3,7 +3,7 @@ import { Middleware, IMiddleware, Context, Next } from "koa-ts-decorators";
 import { Catalog } from "di-ts-decorators";
 
 @Middleware("api-server")
-export class MiddlewareErrors implements IMiddleware {
+export class Errors implements IMiddleware {
 
     constructor (
         private readonly _app_id: string,

@@ -24,6 +24,14 @@ export class Logger extends EventEmitter implements ILogger {
             throw Error(`Mode must be ${this._modes.join()}`);
         }
 
+        if (this._config.mode === "debug") {
+            console.log(chalk.cyan("[LOGGER] Debug mode activated"));
+        }
+
+        if (this._config.mode === "dev") {
+            console.log(chalk.cyan("[LOGGER] Developer mode activated"));
+        }
+
     }
 
     private _print (message: unknown, color: string, type: string, mode: string, error: boolean = false): void {
