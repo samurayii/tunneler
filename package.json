@@ -96,8 +96,7 @@
             "keywords",
             "homepage",
             "bugs",
-            "copyFiles",
-            "copyFilesSettings"
+            "copier"
         ]
     },
     "copier": {
