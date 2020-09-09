@@ -1,6 +1,6 @@
 [logger]
     mode = "debug"
-    timestamp = "none"
+    timestamp = "time"
 
 [authorization]
     [[authorization.users]]
