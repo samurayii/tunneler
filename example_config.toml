@@ -1,7 +1,7 @@
 [logger]                # настройка логгера
     mode = "prod"       # режим (prod или dev или debug)
     enable = true       # активация логгера
-    timestamp = false   # выводить время лога (true или false)
+    timestamp = "none"  # выводить время лога (none, time или full)
     type = true         # выводить тип лога (true или false)
 
 [authorization]                     # настрока авторизации

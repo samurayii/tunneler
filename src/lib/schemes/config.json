@@ -13,10 +13,10 @@
                     "enum": [true, false]
                 },
                 "timestamp": {
-                    "type": "boolean",
-                    "default": true,
+                    "type": "string",
+                    "default": "time",
                     "env": "TEMPLATE_LOGGER_TIMESTAMP",
-                    "enum": [true, false]
+                    "enum": ["none", "time", "full"]
                 },
                 "type": {
                     "type": "boolean",

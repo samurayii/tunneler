@@ -1,7 +1,7 @@
 import * as koa_body from "koa-body";
 import { Middleware, IMiddleware } from "koa-ts-decorators";
 import { IApiServerConfig } from "..";
-import { ILogger, Logger } from "../../lib/logger";
+import { ILogger, Logger } from "logger-flx";
 import { Catalog } from "di-ts-decorators";
 
 @Middleware("api-server")

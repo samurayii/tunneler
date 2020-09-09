@@ -1,5 +1,5 @@
 import { IApiServerConfig } from "../http";
-import { ILoggerConfig } from "./logger";
+import { ILoggerConfig } from "logger-flx";
 import { IAuthorizationConfig } from "./authorization";
 import { IDockerHealthcheckConfig } from "./docker-healthcheck";
 
