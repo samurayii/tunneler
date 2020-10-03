@@ -78,42 +78,44 @@ template.
 
 ```
 
-### Пример минималистичного файла конфигурации config.toml.
-```toml
-[api]
-    enable = true
-```
-
 ### Таблица параметров конфигурации.
 
-| Параметр | Переменая среды | Тип | Значение | Описание |
-| ----- | ----- | ----- | ----- | ----- |
-| logger.mode | TEMPLATE_LOGGER_MODE | строка | prod | режим отображения prod, dev или debug |
-| logger.enable | TEMPLATE_LOGGER_ENABLE | логический | true | активация логгера |
-| logger.timestamp | TEMPLATE_LOGGER_TIMESTAMP | логический | false | выводить время лога (true или false) |
-| logger.type | TEMPLATE_LOGGER_TYPE | логический | true | выводить тип лога (true или false) |
-| authorization.users | TEMPLATE_AUTHORIZATION_USERS | массив | [] | массив пользователей |
-| api.enable | TEMPLATE_API_ENABLE | логический | false | активация API (true или false) |
-| api.auth | TEMPLATE_API_AUTH | логический | false | активация авторизации (true или false) |
-| api.listening | TEMPLATE_API_LISTENING | строка | *:3001 | настройка слушателя, формат <хост>:<порт> |
-| api.prefix | TEMPLATE_API_PREFIX | строка | /api | префикс |
-| api.proxy | TEMPLATE_API_PROXY | логический | false | когда поле заголовка true proxy будут доверенным |
-| api.subdomain_offset | TEMPLATE_API_SUBDOMAIN_OFFSET | число | 2 | смещение от поддомена для игнорирования |
-| api.proxy_header | TEMPLATE_API_PROXY_HEADER | строка | X-Forwarded-For | заголовок IP прокси |
-| api.ips_count | TEMPLATE_API_IPS_COUNT | число | 0 | максимальное количество IP прочитанное из заголовка прокси, по умолчанию 0 (означает бесконечность) |
-| api.env | TEMPLATE_API_ENV | строка | development | среда для сервера [koa](https://www.npmjs.com/package/koa) |
-| api.keys | TEMPLATE_API_KEYS | строка[] |  | массив подписанных ключей cookie |
-| api.parsing.enable | TEMPLATE_API_PARSING_ENABLE | логический | false | активация парсинга (true или false) |
-| api.parsing.encoding | TEMPLATE_API_PARSING_ENCODING | строка | utf-8 | кодировка парсинга |
-| api.parsing.form_limit | TEMPLATE_API_PARSING_FORM_LIMIT | строка | 56kb | лимит для форм |
-| api.parsing.json_limit | TEMPLATE_API_PARSING_JSON_LIMIT | строка | 1mb | лимит для json |
-| api.parsing.text_limit | TEMPLATE_API_PARSING_TEXT_LIMIT | строка | 1mb | лимит для raw |
-| api.parsing.text | TEMPLATE_API_PARSING_TEXT | логический | true | парсинг raw |
-| api.parsing.json | TEMPLATE_API_PARSING_JSON | логический | true | парсинг json |
-| api.parsing.multipart | TEMPLATE_API_PARSING_MULTIPART | логический | false | парсинг составных частей |
-| api.parsing.include_unparsed | TEMPLATE_API_PARSING_INCLUDE_UNPARSED | логический | false | добавить исходное тело запроса в переменную ctx.request.body |
-| api.parsing.urlencoded | TEMPLATE_API_PARSING_URLENCODED | логический | true | парсинг данных urlencoded |
-| api.parsing.json_strict | TEMPLATE_API_PARSING_JSON_STRICT | логический | true | строгий режим парсинга json |
-| api.parsing.methods | TEMPLATE_API_PARSING_METHODS | строка[] | ["POST"] | список методов для парсинга POST, PUT и/или PATCH |
-| docke_healthcheck.enable | TEMPLATE_DOCKER_HEALTHCHECK_ENABLE | логический | false | активация |
-| docke_healthcheck.timeout | TEMPLATE_DOCKER_HEALTHCHECK_TIMEOUT | число | 10 | время ожидания в секундах |
+| Параметр | Тип | Значение | Описание |
+| ----- | ----- | ----- | ----- |
+| logger.mode |строка | prod | режим отображения prod, dev или debug |
+| logger.enable | логический | true | активация логгера |
+| logger.timestamp | логический | false | выводить время лога (true или false) |
+| logger.type | логический | true | выводить тип лога (true или false) |
+| authorization.users | массив | [] | массив пользователей |
+| api.enable | логический | false | активация API (true или false) |
+| api.auth | логический | false | активация авторизации (true или false) |
+| api.listening | строка | *:3001 | настройка слушателя, формат <хост>:<порт> |
+| api.prefix | строка | /api | префикс |
+| api.proxy | логический | false | когда поле заголовка true proxy будут доверенным |
+| api.subdomain_offset | число | 2 | смещение от поддомена для игнорирования |
+| api.proxy_header | строка | X-Forwarded-For | заголовок IP прокси |
+| api.ips_count | число | 0 | максимальное количество IP прочитанное из заголовка прокси, по умолчанию 0 (означает бесконечность) |
+| api.env | строка | development | среда для сервера [koa](https://www.npmjs.com/package/koa) |
+| api.keys | строка[] |  | массив подписанных ключей cookie |
+| api.parsing.enable | логический | false | активация парсинга (true или false) |
+| api.parsing.encoding | строка | utf-8 | кодировка парсинга |
+| api.parsing.form_limit | строка | 56kb | лимит для форм |
+| api.parsing.json_limit | строка | 1mb | лимит для json |
+| api.parsing.text_limit | строка | 1mb | лимит для raw |
+| api.parsing.text | логический | true | парсинг raw |
+| api.parsing.json | логический | true | парсинг json |
+| api.parsing.multipart | логический | false | парсинг составных частей |
+| api.parsing.include_unparsed | логический | false | добавить исходное тело запроса в переменную ctx.request.body |
+| api.parsing.urlencoded | логический | true | парсинг данных urlencoded |
+| api.parsing.json_strict | логический | true | строгий режим парсинга json |
+| api.parsing.methods | строка[] | ["POST"] | список методов для парсинга POST, PUT и/или PATCH |
+| docke_healthcheck.enable | логический | false | активация |
+| docke_healthcheck.timeout | число | 10 | время ожидания в секундах |
+
+### Настройка через переменные среды
+
+Ключи конфигурации можно задать через переменные среды ОС. Имя переменной среды формируется из двух частей, префикса `TEMPLATE_` и имени переменной в верхнем реестре. Если переменная вложена, то это обозначается символом `_`. Переменные среды имеют высший приоритет.
+
+пример для переменной **logger.mode**: `TEMPLATE_LOGGER_MODE`
+
+пример для переменной **api.ips_count**: `TEMPLATE_API_IPS_COUNT`
