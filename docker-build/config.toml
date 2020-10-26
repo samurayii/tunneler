@@ -1,7 +1,7 @@
 [logger]
     mode = "prod"
     enable = true
-    timestamp = true
+    timestamp = "time"
     type = true
 
 [api]

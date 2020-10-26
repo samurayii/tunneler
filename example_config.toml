@@ -35,7 +35,3 @@
         urlencoded = true               # парсинг данных urlencoded
         json_strict = true              # строгий режим парсинга json
         methods = ["POST"]              # список методов для парсинга
-
-[docker_healthcheck]    # настрока провеки здоровя для контейнера (утилита docker-healthcheck)
-    enable = false      # активация
-    timeout = 10        # время ожидания

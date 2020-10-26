@@ -37,6 +37,6 @@ const bootstrap = async () => {
 bootstrap();
 
 process.on("SIGTERM", () => {
-    console.log("💀 Termination signal received 💀");
+    logger.log("Termination signal received");
     process.exit();
 });

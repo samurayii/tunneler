@@ -30,7 +30,6 @@ template.
 - **authorization** - настрока авторизации (переменная среды: TEMPLATE_AUTHORIZATION)
 - **api** - настройка API (переменная среды: TEMPLATE_API)
 - **api.parsing** - настройка парсинга (пакет: https://github.com/dlau/koa-body#readme, переменная среды: TEMPLATE_API_PARSING)
-- **docker_healthcheck** - настрока провеки здоровя для контейнера (переменная среды: TEMPLATE_DOCKER_HEALTHCHECK)
 
 ### Пример файла конфигурации config.toml.
 ```toml
@@ -72,10 +71,6 @@ template.
         json_strict = true              # строгий режим парсинга json
         methods = ["POST"]              # список методов для парсинга
 
-[docker_healthcheck]                            # настрока провеки здоровя для контейнера
-    enable = false                              # активация
-    timeout = 10                                # время ожидания
-
 ```
 
 ### Таблица параметров конфигурации.
@@ -109,8 +104,6 @@ template.
 | api.parsing.urlencoded | логический | true | парсинг данных urlencoded |
 | api.parsing.json_strict | логический | true | строгий режим парсинга json |
 | api.parsing.methods | строка[] | ["POST"] | список методов для парсинга POST, PUT и/или PATCH |
-| docke_healthcheck.enable | логический | false | активация |
-| docke_healthcheck.timeout | число | 10 | время ожидания в секундах |
 
 ### Настройка через переменные среды
 
