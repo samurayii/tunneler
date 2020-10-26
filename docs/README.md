@@ -8,6 +8,7 @@ template.
 - [Установка](#install)
 - [Ключи запуска](#launch)
 - [Конфигурация](#configuration)
+- [HTTP API](API.md)
 
 ## <a name="install"></a> Установка и использование.
 
