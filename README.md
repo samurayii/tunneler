@@ -1,3 +1,3 @@
-# Template app.
+# Tunneler
 
-template. [Документация](docs/README.md)
+Сервис для создания ssh туннелей. [Документация](docs/README.md)

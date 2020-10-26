@@ -22,16 +22,3 @@
     ips_count = 0                       # максимальное количество IP прочитанное из заголовка прокси, по умолчанию 0 (означает бесконечность)
     env = "development"                 # среда для сервера koa
     #keys = []                          # массив подписанных ключей cookie
-    [api.parsing]                       # настройка парсинга (пакет: https://github.com/dlau/koa-body#readme)
-        enable = false                  # активация парсинга
-        encoding = "utf-8"              # кодировка парсинга
-        form_limit = "56kb"             # лимит для форм
-        json_limit = "1mb"              # лимит для json
-        text_limit = "1mb"              # лимит для raw
-        text = true                     # парсинг raw
-        json = true                     # парсинг json
-        multipart = false               # парсинг составных частей
-        include_unparsed = false        # добавить исходное тело запроса в переменную ctx.request.body
-        urlencoded = true               # парсинг данных urlencoded
-        json_strict = true              # строгий режим парсинга json
-        methods = ["POST"]              # список методов для парсинга
