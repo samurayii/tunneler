@@ -4,6 +4,8 @@
         "healthcheck",
         "jtomler",
         "Nuzhnov",
-        "samuray"
+        "samuray",
+        "sshpass",
+        "stricthostkeychecking"
     ]
 }

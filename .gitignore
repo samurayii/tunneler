@@ -7,6 +7,8 @@ Thumbs.db
 .vscode
 bundle
 ob
+run_for_test.txt
 docker-build/app
 docker-build/package.json
 !docker-build/config.toml
+tests/config.toml

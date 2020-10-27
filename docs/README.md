@@ -1,8 +1,8 @@
-# Template.
+# Tunneler
 
-## Информация.
+## Информация
 
-template. 
+Сервис для центрального туннелирования портов через ssh. Имеет зависимость от пакета Linux `sshpass`.
 
 ## Оглавление:
 - [Установка](#install)
@@ -10,29 +10,32 @@ template.
 - [Конфигурация](#configuration)
 - [HTTP API](API.md)
 
-## <a name="install"></a> Установка и использование.
+## <a name="install"></a> Установка и использование
 
-пример строки запуска: `node /template/app.js -c config.toml`
+пример строки запуска: `node /tunneler/app.js -c config.toml`
+
+пример запуска docker контейнера: docker run -d --restart unless-stopped pwd/config.toml:/tunneler/config.toml -p 80:80 -p 3001:3001 samuray/tunneler:latest
 
 ## <a name="launch"></a> Таблица ключей запуска.
 Ключ | Описание
 ------------ | -------------
 --version, -v | вывести номер версии приложения
 --help, -h | вызвать справку по ключам запуска
---config, -c | путь к файлу конфигурации в формате toml или json, (переменная среды: TEMPLATE_CONFIG_PATH)
+--config, -c | путь к файлу конфигурации в формате toml или json, (переменная среды: TUNNELER_CONFIG_PATH)
 
-## <a name="configuration"></a> Конфигурация.
+## <a name="configuration"></a> Конфигурация
 
-Программа настраивается через файл конфигурации двух форматов TOML или JSON. Так же можно настраивать через переменные среды, которые будут считаться первичными. 
+Программа настраивается через файл конфигурации двух форматов TOML или JSON. Так же можно настраивать через переменные среды, которые будут считаться первичными.
 
-### Секции файла конфигурации:
+### Секции файла конфигурации
 
-- **logger** - настрока логгера (переменная среды: TEMPLATE_LOGGER)
-- **authorization** - настрока авторизации (переменная среды: TEMPLATE_AUTHORIZATION)
-- **api** - настройка API (переменная среды: TEMPLATE_API)
-- **api.parsing** - настройка парсинга (пакет: https://github.com/dlau/koa-body#readme, переменная среды: TEMPLATE_API_PARSING)
+- **logger** - настрока логгера (переменная среды: TUNNELER_LOGGER)
+- **authorization** - настрока авторизации (переменная среды: TUNNELER_AUTHORIZATION)
+- **api** - настройка API (переменная среды: TUNNELER_API)
+- **tunnels** - массив настроек туннелей (переменная среды: TUNNELER_TUNNELS)
 
-### Пример файла конфигурации config.toml.
+### Пример файла конфигурации config.toml
+
 ```toml
 [logger]                # настройка логгера
     mode = "prod"       # режим (prod или dev или debug)
@@ -40,11 +43,11 @@ template.
     timestamp = false   # выводить время лога (true или false)
     type = true         # выводить тип лога (true или false)
 
-[authorization]                     # настрока авторизации
+[authorization]                     # настройка авторизации
     [[authorization.users]]         # массив пользователей
         username = "username"       # имя пользователя
         password = "password"       # пароль пользователя
-    [[authorization.users]]         
+    [[authorization.users]]
         token = "xxxxxxxxxxxx"      # токен доступа
 
 [api]                                   # настройка API
@@ -58,23 +61,24 @@ template.
     ips_count = 0                       # максимальное количество IP прочитанное из заголовка прокси, по умолчанию 0 (означает бесконечность)
     env = "development"                 # среда для сервера koa
     #keys = []                          # массив подписанных ключей cookie
-    [api.parsing]                       # настройка парсинга (пакет: https://github.com/dlau/koa-body#readme)
-        enable = false                  # активация парсинга
-        encoding = "utf-8"              # кодировка парсинга
-        form_limit = "56kb"             # лимит для форм
-        json_limit = "1mb"              # лимит для json
-        text_limit = "1mb"              # лимит для raw
-        text = true                     # парсинг raw
-        json = true                     # парсинг json
-        multipart = false               # парсинг составных частей
-        include_unparsed = false        # добавить исходное тело запроса в переменную ctx.request.body
-        urlencoded = true               # парсинг данных urlencoded
-        json_strict = true              # строгий режим парсинга json
-        methods = ["POST"]              # список методов для парсинга
 
+[[tunnels]]                             # массив настроек туннелей
+    name = ""                           # имя туннеля, должно быть уникальным
+    enable = true                       # активация туннеля
+    user = "user"                       # пользователь
+    password = "password"               # пароль
+    remote_host = ""                    # сервер подключения
+    target_host = "127.0.0.1"           # сервер подключения к порту
+    target_port = 80                    # порт который нужно прокинуть
+    destination_host = "0.0.0.0"        # сервер на котором будет открыть порт
+    destination_port = 80               # открываемый порт
+    ssh_port = 22                       # порт подключения ssh
+    critical = false                    # критичность канала
+    restart = false                     # перезапуск канала (игнорируется если critical=true)
+    restart_interval = 10               # интервал перезапуска (игнорируется если restart=false)
 ```
 
-### Таблица параметров конфигурации.
+### Таблица параметров конфигурации
 
 | Параметр | Тип | Значение | Описание |
 | ----- | ----- | ----- | ----- |
@@ -93,23 +97,24 @@ template.
 | api.ips_count | число | 0 | максимальное количество IP прочитанное из заголовка прокси, по умолчанию 0 (означает бесконечность) |
 | api.env | строка | development | среда для сервера [koa](https://www.npmjs.com/package/koa) |
 | api.keys | строка[] |  | массив подписанных ключей cookie |
-| api.parsing.enable | логический | false | активация парсинга (true или false) |
-| api.parsing.encoding | строка | utf-8 | кодировка парсинга |
-| api.parsing.form_limit | строка | 56kb | лимит для форм |
-| api.parsing.json_limit | строка | 1mb | лимит для json |
-| api.parsing.text_limit | строка | 1mb | лимит для raw |
-| api.parsing.text | логический | true | парсинг raw |
-| api.parsing.json | логический | true | парсинг json |
-| api.parsing.multipart | логический | false | парсинг составных частей |
-| api.parsing.include_unparsed | логический | false | добавить исходное тело запроса в переменную ctx.request.body |
-| api.parsing.urlencoded | логический | true | парсинг данных urlencoded |
-| api.parsing.json_strict | логический | true | строгий режим парсинга json |
-| api.parsing.methods | строка[] | ["POST"] | список методов для парсинга POST, PUT и/или PATCH |
+| tunnels.name | строка |  | имя туннеля, должно быть уникальным |
+| tunnels.enable | логический | true | активация туннеля|
+| tunnels.user | строка | user | пользователь |
+| tunnels.password | строка | password | пароль |
+| tunnels.remote_host | строка |  | сервер подключения |
+| tunnels.target_host | строка | 127.0.0.1 | сервер подключения к порту |
+| tunnels.target_port | число | 80 | порт который нужно прокинуть |
+| tunnels.destination_host | строка | 0.0.0.0 | сервер на котором будет открыть порт |
+| tunnels.destination_port | число | 80 | открываемый порт |
+| tunnels.ssh_port | число | 22 | порт подключения ssh |
+| tunnels.critical | логический | false | критичность канала |
+| tunnels.restart | логический | false | перезапуск канала (игнорируется если critical=true) |
+| tunnels.restart_interval | строка | 10 | интервал перезапуска (игнорируется если restart=false) |
 
 ### Настройка через переменные среды
 
-Ключи конфигурации можно задать через переменные среды ОС. Имя переменной среды формируется из двух частей, префикса `TEMPLATE_` и имени переменной в верхнем реестре. Если переменная вложена, то это обозначается символом `_`. Переменные среды имеют высший приоритет.
+Ключи конфигурации можно задать через переменные среды ОС. Имя переменной среды формируется из двух частей, префикса `TUNNELER_` и имени переменной в верхнем реестре. Если переменная вложена, то это обозначается символом `_`. Переменные среды имеют высший приоритет.
 
-пример для переменной **logger.mode**: `TEMPLATE_LOGGER_MODE`
+пример для переменной **logger.mode**: `TUNNELER_LOGGER_MODE`
 
-пример для переменной **api.ips_count**: `TEMPLATE_API_IPS_COUNT`
+пример для переменной **api.ips_count**: `TUNNELER_API_IPS_COUNT`

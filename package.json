@@ -1,6 +1,6 @@
 {
     "name": "tunneler",
-    "version": "0.0.1",
+    "version": "0.1.1",
     "description": "Tunneler for ssh",
     "main": "app.js",
     "docker_image": "samuray/tunneler",
@@ -10,7 +10,8 @@
         "pub": "npm run build && npm publish ./dist && rimraf ./dist",
         "build": "rimraf ./dist && npm run lint && tsc && json-key-remover && files-copier -e build",
         "start": "node ./dist/app.js --config ./config.toml",
-        "start:dev": "ts-node ./src/app.ts --config ./config.toml",
+        "start:dev": "ts-node ./src/app.ts",
+        "start:test": "ts-node ./src/app.ts --config ./tests/config.toml",
         "lint": "eslint \"./src/**/*.{js,ts}\" --quiet --fix && tsc --noEmit",
         "lint:tests": "eslint \"./tests/**/*.{js,ts}\" --quiet --fix",
         "test": "npm run test:unit && npm run test:e2e",

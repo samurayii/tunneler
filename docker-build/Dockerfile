@@ -3,10 +3,11 @@ FROM ubuntu:18.04
 ENV APP_NAME "tunneler"
 
 RUN apt-get update && \
-    apt-get install -y curl bash && \
+    apt-get install -y curl bash sshpass && \
     curl -sL https://deb.nodesource.com/setup_12.x | bash && \
     apt-get install -y nodejs && \
     node -v && \
+    sshpass -V && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*  && \
     rm -f /var/cache/apt/archives/*.deb  && \

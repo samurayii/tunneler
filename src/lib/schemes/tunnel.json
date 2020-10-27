@@ -1,0 +1,90 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 32
+        },
+        "enable": {
+            "type": "boolean",
+            "default": true,
+            "enum": [true, false]
+        },
+        "user": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 32
+        },
+        "password": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 64
+        },
+        "remote_host": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 128
+        },
+        "destination_host": {
+            "type": "string",
+            "minLength": 0,
+            "default": "0.0.0.0",
+            "maxLength": 128
+        },
+        "destination_port": {
+            "type": "integer",
+            "default": 80,
+            "minimum": 1,
+            "maximum": 65535
+        },
+        "target_host": {
+            "type": "string",
+            "minLength": 0,
+            "default": "127.0.0.1",
+            "maxLength": 128
+        },
+        "target_port": {
+            "type": "integer",
+            "default": 80,
+            "minimum": 1,
+            "maximum": 65535
+        },
+        "ssh_port": {
+            "type": "integer",
+            "default": 22,
+            "minimum": 1,
+            "maximum": 65535
+        },
+        "critical": {
+            "type": "boolean",
+            "default": false,
+            "enum": [true, false]
+        },
+        "restart": {
+            "type": "boolean",
+            "default": false,
+            "enum": [true, false]
+        },
+        "restart_interval": {
+            "type": "integer",
+            "default": 10,
+            "minimum": 1
+        }
+    },
+    "required": [
+        "name",
+        "enable",
+        "user",
+        "password",
+        "remote_host",
+        "destination_host",
+        "destination_port",
+        "target_host",
+        "target_port",
+        "ssh_port",
+        "critical",
+        "restart",
+        "restart_interval"
+    ]
+}

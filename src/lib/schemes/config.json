@@ -140,11 +140,18 @@
                 "ips_count",
                 "env"
             ]
+        },
+        "tunnels": {
+            "type": "array",
+            "default": [],
+            "env": "TUNNELER_TUNNELS",
+            "minItems": 1
         }
     },
     "required": [
         "logger",
         "authorization",
-        "api"
+        "api",
+        "tunnels"
     ]
 }

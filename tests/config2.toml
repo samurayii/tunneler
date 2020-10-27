@@ -1,0 +1,18 @@
+[logger]
+    mode = "debug"
+    timestamp = "time"
+
+[api]
+    enable = true
+
+[[tunnels]]
+    name = "http-tunnel-1"
+    enable = false
+    user = "toor"
+    password = "monik#123"
+    remote_host = "172.23.16.51"
+    destination_host = "0.0.0.0"
+    destination_port = 80
+    target_host = "127.0.0.1"
+    target_port = 80
+    restart = true
