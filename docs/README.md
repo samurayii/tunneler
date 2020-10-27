@@ -14,7 +14,7 @@
 
 пример строки запуска: `node /tunneler/app.js -c config.toml`
 
-пример запуска docker контейнера: docker run -d --restart unless-stopped pwd/config.toml:/tunneler/config.toml -p 80:80 -p 3001:3001 samuray/tunneler:latest
+пример запуска docker контейнера: `docker run -d --restart unless-stopped pwd/config.toml:/tunneler/config.toml -p 80:80 -p 3001:3001 samuray/tunneler:latest`
 
 ## <a name="launch"></a> Таблица ключей запуска.
 Ключ | Описание
