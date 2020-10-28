@@ -12,3 +12,5 @@ docker-build/app
 docker-build/package.json
 !docker-build/config.toml
 tests/config.toml
+tests/config2.toml
+tests/config3.toml
