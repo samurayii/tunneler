@@ -63,7 +63,7 @@
     },
     "dependencies": {
         "ajv": "^6.12.6",
-        "axios": "^0.21.0",
+        "axios": "^0.21.1",
         "chalk": "^4.1.0",
         "commander": "^6.2.0",
         "di-ts-decorators": "0.0.3",
